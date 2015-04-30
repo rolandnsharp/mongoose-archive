@@ -1,18 +1,18 @@
 var Test = require('./lib/model');
 var should = require('should');
+var fixtures = require('./lib/fixtures');
 
 describe("archive(); Static: ", function() {
 
-	var test1 = new Test(fixtures.test.test1);
+	it("Should archive document.", function(done) {
 
-	it("Should set archived to true.", function(done) {
 		Test.archive({
-			_id: test1._id
+			name: 'default'
 		}, function(err) {
 			should.not.exist(err);
 
 			Test.collection.findOne({
-				_id: test1._id
+				name: 'default'
 			}, function(err, doc) {
 
 				doc.archived.should.be.true;
@@ -26,18 +26,19 @@ describe("archive(); Static: ", function() {
 
 describe("archive(); Method: ", function() {
 
-	var test2 = new Test(fixtures.test.test2);
+	it("Should archive document.", function(done) {
+		Test.findOne({
+			name: 'default'
+		}, function(err, doc) {
 
-	it("Should archive a single document.", function(done) {
-		Test.findById(test2._id, function(err, test) {
 			should.not.exist(err);
-			should.not.exist(test.archived);
+			should.not.exist(doc.archived);
 
-			test.archive(function(err) {
+			doc.archive(function(err) {
 				should.not.exist(err);
 
 				Test.collection.findOne({
-					_id: test2._id
+					name: 'default'
 				}, function(err, doc) {
 
 					doc.archived.should.be.true;
