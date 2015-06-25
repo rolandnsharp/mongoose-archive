@@ -1,8 +1,8 @@
-var Test = require('./lib/model');
+var Test = require('./model');
 var should = require('should');
-var fixtures = require('./lib/fixtures');
+var fixtures = require('./fixtures');
 
-describe("archive(); Static: ", function() {
+describe("Archive Static: ", function() {
 
 	it("Should archive document.", function(done) {
 
@@ -24,7 +24,7 @@ describe("archive(); Static: ", function() {
 
 });
 
-describe("archive(); Method: ", function() {
+describe("Archive Method: ", function() {
 
 	it("Should archive document.", function(done) {
 		Test.findOne({

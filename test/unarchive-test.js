@@ -1,8 +1,8 @@
-var Test = require('./lib/model');
+var Test = require('./model');
 var should = require('should');
-var fixtures = require('./lib/fixtures');
+var fixtures = require('./fixtures');
 
-describe("unarchive(); Static:", function() {
+describe("Unarchive Static:", function() {
 
     it("Should unarchive an archived document.", function(done) {
 
@@ -24,7 +24,7 @@ describe("unarchive(); Static:", function() {
     });
 });
 
-describe("unarchive(); Method:", function() {
+describe("Unarchive Method:", function() {
 
     beforeEach(function(done) {
         Test.remove(done);

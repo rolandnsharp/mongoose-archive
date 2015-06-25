@@ -5,11 +5,14 @@ module.exports = function(schema) {
 		archivedAt: Date
 	});
 
-	var hooks = ['find', 'findOne', 'findOneAndUpdate', 'update', 'count'];
-	// add pre query conditional so that archived documents are invisible
-	hooks.forEach(function(hook) {
-		schema.pre(hook, function(next) {
+	// all mongoose queries are built using these five base queries
+	// therefore adding the `archived !== true` condition here, adds it to all queries
+	var queries = ['find', 'findOne', 'findOneAndUpdate', 'update', 'count'];
+	queries.forEach(function(query) {
 
+		schema.pre(query, function(next) {
+
+			// add pre query conditional so that archived documents are invisible
 			this.where({
 				archived: {
 					'$ne': true
@@ -19,8 +22,8 @@ module.exports = function(schema) {
 		});
 	});
 
-
 	schema.statics.archive = function(first, second) {
+
 		var callback;
 		var conditions;
 
@@ -42,6 +45,7 @@ module.exports = function(schema) {
 		};
 
 		this.update(conditions, update, function(err, raw) {
+
 			if (err) {
 				return callback(err);
 			}
@@ -86,7 +90,7 @@ module.exports = function(schema) {
 				archivedAt: 1
 			}
 		};
-
+		// TODO update with mongoose
 		this.collection.update(conditions, update, function(err, raw) {
 			if (err) {
 				return callback(err);
@@ -101,6 +105,7 @@ module.exports = function(schema) {
 	};
 
 	schema.methods.unarchive = function(callback) {
+		// unset
 		this.archived = undefined;
 		this.archivedAt = undefined;
 		this.save(callback);
